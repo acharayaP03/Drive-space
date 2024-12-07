@@ -1,17 +1,18 @@
-import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import React from 'react';
+import { Poppins } from 'next/font/google';
+import './globals.css';
 
 const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  display: "swap",
-  variable: "--font-poppins",
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+  variable: '--font-poppins',
 });
 
 export const metadata: Metadata = {
-  title: "Custom Storage",
-  description: "A custom storage solution for your needs for free.",
+  title: 'Custom Storage',
+  description: 'A custom storage solution for your needs for free.',
 };
 
 export default function RootLayout({
@@ -21,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${poppins.variable} antialiased`}>
+      <body className={`${poppins.variable} font-poppins antialiased`}>
         {children}
       </body>
     </html>
