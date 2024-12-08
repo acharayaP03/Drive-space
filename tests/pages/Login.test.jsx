@@ -1,13 +1,21 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import Page from '../../app/(auth)/login/page.tsx';
+import AuthForm from '../../components/AuthForm.tsx';
 
 describe('Login page', () => {
-  it('should render', async () => {
-    const Pagecomponent = await Page();
-    render(Pagecomponent);
+  it('renders the login form correctly', () => {
+    render(<AuthForm type="login" />);
 
-    const heading = screen.getByRole('heading', { name: /login user/i });
-    expect(heading).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /login/i })).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText(/enter your email/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /sign in/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/don't have an account\?/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: /create new account/i }),
+    ).toHaveAttribute('href', '/register');
   });
 });
