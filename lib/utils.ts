@@ -15,3 +15,8 @@ export function useAuthFormSchema<T>(formType: T) {
         : z.string().optional(),
   });
 }
+
+
+export function parseStringify<T>(data: T) {
+  return JSON.parse(JSON.stringify(data));
+}
