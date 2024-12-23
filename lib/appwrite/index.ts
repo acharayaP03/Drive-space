@@ -1,3 +1,4 @@
+'use server';
 /**
  * @appwrite/sdk for client
  * it will allow you to interact with appwrite server
@@ -47,11 +48,11 @@ export const createAdminClient = async () => {
     get databases() {
       return new Databases(client);
     },
-    get storage(){
-        return new Storage(client);
+    get storage() {
+      return new Storage(client);
     },
-    get Avatars(){
-        return new Avatars(client);
-    }
+    get Avatars() {
+      return new Avatars(client);
+    },
   };
 };
