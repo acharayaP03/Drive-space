@@ -12,6 +12,7 @@ import Link from "next/link";
 import FormField from "./FormFields/FormField";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import OTPModel from "./OTPModel";
 
 type FormType = "login" | "register";
 
@@ -108,6 +109,9 @@ export default function AuthForm({ type }: { type: FormType }) {
           </div>
         </form>
       </Form>
+      {accountId && (
+        <OTPModel email={form.getValues("email")} accountId={accountId} />
+      )}
     </>
   );
 }

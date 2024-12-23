@@ -1,3 +1,8 @@
+"use client";
+import React, { useState } from "react";
+import { verifySecret, sendEmailOTP } from "@/lib/actions/user.actions";
+import { useRouter } from "next/navigation";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,7 +17,6 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
@@ -26,21 +30,27 @@ export default function OTPModel({
   const [isOpen, setIsOpen] = useState(true);
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-  function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
+  async function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      // Compare this snippet from lib/actions/user.actions.ts:
+      // set cookie
+      const sessionId = await verifySecret({ accountId, password });
+      if (sessionId) {
+        setIsOpen(false);
+        router.push("/");
+      }
     } catch (error) {
       console.error("Failed to verify OPT", error);
     }
     setIsLoading(false);
   }
 
-  function handleResendOtp() {
-    // Compare this snippet from lib/actions/user.actions.ts:
+  async function handleResendOtp() {
+    await sendEmailOTP({ email });
   }
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
