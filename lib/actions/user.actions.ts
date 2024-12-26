@@ -7,7 +7,7 @@ import { ID, Query } from "node-appwrite";
 
 import { createAdminClient, createSessionClient } from "../appwrite";
 import { appwriteConfig } from "../appwrite/config";
-import { parseStringify } from "../utils";
+import { handleError, parseStringify } from "../utils";
 
 /**
  * 1. User enters full name and email
@@ -28,11 +28,6 @@ const getUserByEmail = async (email: string) => {
   );
 
   return result.total > 0 ? result.documents[0] : null;
-};
-
-const handleError = (error: unknown, message: string) => {
-  console.error(error);
-  throw new Error(message);
 };
 
 export const sendEmailOTP = async ({ email }: { email: string }) => {
