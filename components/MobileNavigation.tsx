@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import FileUploader from "./FileUploader";
+import { Button } from "./ui/button";
 
 export default function MobileNavigation({
   ownerId,
@@ -90,6 +92,20 @@ export default function MobileNavigation({
               ))}
             </ul>
           </nav>
+          <Separator className="mt-5 bg-light-200/20" />
+          <div className="flex flex-col justify-between gap-5">
+            <FileUploader />
+
+            <Button type="submit" className="mobile-sign-out-button">
+              <Image
+                src="/assets/icons/logout.svg"
+                alt="Logout"
+                width={24}
+                height={24}
+              />
+              <p>Logout</p>
+            </Button>
+          </div>
         </SheetContent>
       </Sheet>
     </header>
