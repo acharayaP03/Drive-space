@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 import FileUploader from "./FileUploader";
 import { Button } from "./ui/button";
 import UserInfo from "./UserInfo";
+import { singOutUser } from "@/lib/actions/user.actions";
 
 export default function MobileNavigation({
   ownerId,
@@ -90,7 +91,11 @@ export default function MobileNavigation({
           <div className="flex flex-col justify-between gap-5">
             <FileUploader />
 
-            <Button type="submit" className="mobile-sign-out-button">
+            <Button
+              type="submit"
+              className="mobile-sign-out-button"
+              onClick={async () => await singOutUser()}
+            >
               <Image
                 src="/assets/icons/logout.svg"
                 alt="Logout"
