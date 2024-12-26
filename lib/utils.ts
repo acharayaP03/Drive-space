@@ -22,6 +22,11 @@ export function parseStringify<T>(data: T) {
   return JSON.parse(JSON.stringify(data));
 }
 
+export const handleError = (error: unknown, message: string) => {
+  console.error(error);
+  throw new Error(message);
+};
+
 export const convertFileToUrl = (file: File) => URL.createObjectURL(file);
 
 export const convertFileSize = (sizeInBytes: number, digits?: number) => {
