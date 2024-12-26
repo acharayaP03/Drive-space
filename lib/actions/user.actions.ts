@@ -1,12 +1,13 @@
 "use server";
 
-import { ID, Query } from "node-appwrite";
-import { createAdminClient, createSessionClient } from "../appwrite";
-import { appwriteConfig } from "../appwrite/config";
-import { parseStringify } from "../utils";
 import { cookies } from "next/headers";
 import { avatarPlaceholderUrl } from "@/constants";
 import { redirect } from "next/navigation";
+import { ID, Query } from "node-appwrite";
+
+import { createAdminClient, createSessionClient } from "../appwrite";
+import { appwriteConfig } from "../appwrite/config";
+import { parseStringify } from "../utils";
 
 /**
  * 1. User enters full name and email
