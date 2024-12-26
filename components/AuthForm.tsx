@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { useAuthFormSchema } from "@/lib/utils";
-import { createAccount } from "@/lib/actions/user.actions";
+import { createAccount, signInUser } from "@/lib/actions/user.actions";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -35,10 +35,13 @@ export default function AuthForm({ type }: { type: FormType }) {
     setIsLoading(true);
     setErrorMessage("");
     try {
-      const user = await createAccount({
-        fullName: values.fullName,
-        email: values.email,
-      });
+      const user =
+        type === "register"
+          ? await createAccount({
+              fullName: values.fullName,
+              email: values.email,
+            })
+          : await signInUser({ email: values.email });
 
       setAccountId(user.accountId);
     } catch (error) {
