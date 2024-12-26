@@ -1,19 +1,20 @@
 "use client";
 
-import { avatarPlaceholderUrl, navItems } from "@/constants";
+import React from "react";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+
+import { avatarPlaceholderUrl, navItems } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React from "react";
+import NavigationItems from "./NavigationItems";
 
-interface Props {
-  fullName: string;
-  email: string;
-  avatar?: string;
-}
-export default function Sidebar({ fullName, email }: Props) {
+import type { ICurrentLoggedInUser } from "@/lib/typings";
+import UserInfo from "./UserInfo";
+
+export default function Sidebar({ fullName, email }: ICurrentLoggedInUser) {
   const pathname = usePathname();
+
   return (
     <aside className="sidebar">
       <Link href="/">
@@ -37,26 +38,21 @@ export default function Sidebar({ fullName, email }: Props) {
       <nav className="sidebar-nav">
         <ul className="flex flex-1 flex-col gap-6">
           {navItems.map(({ url, name, icon }) => (
-            <Link key={name} href={url} className="lg:w-full">
-              <li
-                className={cn(
-                  "sidebar-nav-item",
-                  pathname === url && "shad-active",
-                )}
-              >
-                <Image
-                  src={icon}
-                  alt={name}
-                  width={24}
-                  height={24}
-                  className={cn(
-                    "nav-icon",
-                    pathname === url && "nav-icon-active",
-                  )}
-                />
-                <p className="hidden lg:block">{name}</p>
-              </li>
-            </Link>
+            <NavigationItems
+              key={name}
+              url={url}
+              name={name}
+              icon={icon}
+              linkContentClass={cn(
+                "sidebar-nav-item",
+                pathname === url && "shad-active",
+              )}
+              imageContentClass={cn(
+                "nav-icon",
+                pathname === url && "nav-icon-active",
+              )}
+              isMobile={false}
+            />
           ))}
         </ul>
       </nav>
@@ -67,19 +63,12 @@ export default function Sidebar({ fullName, email }: Props) {
         height={418}
         className="w-full"
       />
-      <div className="sidebar-user-info">
-        <Image
-          src={avatarPlaceholderUrl}
-          alt="user"
-          width={48}
-          height={48}
-          className="rounded-full"
-        />
-        <div className="hidden lg:block">
-          <p className="subtitle-2 capitalize">{fullName}</p>
-          <p className="caption">{email}</p>
-        </div>
-      </div>
+      <UserInfo
+        contentClass="sidebar-user-info"
+        fullName={fullName}
+        email={email}
+        isMobile={false}
+      />
     </aside>
   );
 }
