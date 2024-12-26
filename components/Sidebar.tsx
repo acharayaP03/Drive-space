@@ -10,6 +10,7 @@ import Link from "next/link";
 import NavigationItems from "./NavigationItems";
 
 import type { ICurrentLoggedInUser } from "@/lib/typings";
+import UserInfo from "./UserInfo";
 
 export default function Sidebar({ fullName, email }: ICurrentLoggedInUser) {
   const pathname = usePathname();
@@ -50,6 +51,7 @@ export default function Sidebar({ fullName, email }: ICurrentLoggedInUser) {
                 "nav-icon",
                 pathname === url && "nav-icon-active",
               )}
+              isMobile={false}
             />
           ))}
         </ul>
@@ -61,19 +63,12 @@ export default function Sidebar({ fullName, email }: ICurrentLoggedInUser) {
         height={418}
         className="w-full"
       />
-      <div className="sidebar-user-info">
-        <Image
-          src={avatarPlaceholderUrl}
-          alt="user"
-          width={48}
-          height={48}
-          className="rounded-full"
-        />
-        <div className="hidden lg:block">
-          <p className="subtitle-2 capitalize">{fullName}</p>
-          <p className="caption">{email}</p>
-        </div>
-      </div>
+      <UserInfo
+        contentClass="sidebar-user-info"
+        fullName={fullName}
+        email={email}
+        isMobile={false}
+      />
     </aside>
   );
 }

@@ -20,6 +20,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import FileUploader from "./FileUploader";
 import { Button } from "./ui/button";
+import UserInfo from "./UserInfo";
 
 export default function MobileNavigation({
   ownerId,
@@ -56,19 +57,12 @@ export default function MobileNavigation({
             </SheetDescription>
           </SheetHeader>
           <SheetTitle>
-            <div className="header-user">
-              <Image
-                src={avatarPlaceholderUrl}
-                alt="avatar"
-                width={40}
-                height={40}
-                className="header-user-avatar rounded-full"
-              />
-              <div className="sm:hidden lg:block">
-                <p className="subtitle-2 capitalize">{fullName}</p>
-                <p className="caption">{email}</p>
-              </div>
-            </div>
+            <UserInfo
+              contentClass="header-user"
+              fullName={fullName}
+              email={email}
+              isMobile={true}
+            />
             <Separator className="mb-4 bg-light-200/20" />
           </SheetTitle>
           <nav className="mobile-nav">
