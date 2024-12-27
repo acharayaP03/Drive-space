@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 
-import type { ICurrentLoggedInUser } from "@/lib/typings";
 import { avatarPlaceholderUrl, navItems } from "@/constants";
 import NavigationItems from "./NavigationItems";
 
@@ -32,6 +31,8 @@ export default function MobileNavigation({
 }: ICurrentLoggedInUser) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+
+  const fileUploaderProps = { ownerId, accountId };
   return (
     <header className="mobile-header">
       <Image
@@ -87,9 +88,9 @@ export default function MobileNavigation({
               ))}
             </ul>
           </nav>
-          <Separator className="mt-5 bg-light-200/20" />
-          <div className="flex flex-col justify-between gap-5">
-            <FileUploader />
+          <Separator className="mb-4 mt-5 bg-light-200/20" />
+          <div className="mt-auto flex flex-col justify-between gap-5">
+            <FileUploader {...fileUploaderProps} />
 
             <Button
               type="submit"
