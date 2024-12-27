@@ -5,12 +5,19 @@ import Search from "./Search";
 import FileUploader from "./FileUploader";
 import { singOutUser } from "@/lib/actions/user.actions";
 
-export default function Header() {
+export default function Header({
+  ownerId,
+  accountId,
+}: {
+  ownerId: string;
+  accountId: string;
+}) {
+  const fileUploaderProps = { ownerId, accountId };
   return (
     <header className="header">
       <Search />
       <div className="header-wrapper">
-        <FileUploader />
+        <FileUploader {...fileUploaderProps} />
         <form
           action={async () => {
             "use server";
