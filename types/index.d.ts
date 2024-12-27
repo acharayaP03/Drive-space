@@ -11,6 +11,14 @@ declare interface ActionType {
 //   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 // }
 
+declare interface ICurrentLoggedInUser {
+  fullName: string;
+  email: string;
+  avatar: string;
+  ownerId: string;
+  accountId: string;
+}
+
 declare interface UploadFileProps {
   file: File;
   ownerId: string;

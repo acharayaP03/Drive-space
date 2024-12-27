@@ -4,14 +4,13 @@ import { ID } from "node-appwrite";
 import { InputFile } from "node-appwrite/file";
 import { revalidatePath } from "next/cache";
 import {
-    getFileType,
-    constructFileUrl,
-    handleError,
-    parseStringify,
+  getFileType,
+  constructFileUrl,
+  handleError,
+  parseStringify,
 } from "@/lib/utils";
 import { createAdminClient } from "@/lib/appwrite";
 import { appwriteConfig } from "@/lib/appwrite/config";
-import { UploadFileProps, FileDocument } from "@/types"; 
 
 /**
  * @description
@@ -25,7 +24,7 @@ export async function uploadFile({
   ownerId,
   accountId,
   path,
-}: UploadFileProps): Promise<FileDocument> {
+}: UploadFileProps): Promise<FileDocument | undefined> {
   const { storage, databases } = await createAdminClient();
 
   try {
@@ -49,7 +48,7 @@ export async function uploadFile({
       owner: ownerId,
       accountId,
       users: [], // Add user to file if it's shared
-      bucketField: bucketFile.$id,
+      bucketFieldId: bucketFile.$id,
     };
 
     // Create a document in the database for the uploaded file

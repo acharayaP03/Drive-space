@@ -1,29 +1,63 @@
 "use client";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { usePathname } from "next/navigation";
+import { MAX_FILE_SIZE } from "@/constants";
+import { toast } from "@/hooks/use-toast";
+import { uploadFile } from "@/lib/actions/file.actions";
+
 import { Button } from "./ui/button";
 import { cn, convertFileToUrl, getFileType } from "@/lib/utils";
 import Image from "next/image";
 import Thumbnail from "./Thumbnail";
 
-interface FileUploaderProps {
-  accountId: string;
-  ownerId: string;
-  className?: string;
-}
 
 export default function FileUploader({
   accountId,
   ownerId,
   className,
 }: FileUploaderProps) {
+  const path = usePathname();
   const [files, setFiles] = useState<File[]>([]);
 
-  const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    setFiles(acceptedFiles);
-  }, []);
+  const onDrop = useCallback(
+    async (acceptedFiles: File[]) => {
+      setFiles(acceptedFiles);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+      // Upload the file to the server
+      const uploadPromises = acceptedFiles.map(async (file) => {
+        if (file.size > MAX_FILE_SIZE) {
+          setFiles((prevFiles) =>
+            prevFiles.filter((f) => f.name !== file.name),
+          ); // Remove the file from the list
+
+          return toast({
+            description: (
+              <p className="body-2 text-white">
+                <span className="font-semibold">{file.name}</span>
+              </p>
+            ),
+            className: "error-toast",
+          });
+        }
+
+        return uploadFile({ file, ownerId, accountId, path }).then(
+          (uploadedFile) => {
+            if (uploadedFile) {
+              setFiles((prevFiles) =>
+                prevFiles.filter((f) => f.name !== file.name),
+              );
+            }
+          },
+        );
+      });
+
+      await Promise.all(uploadPromises);
+    },
+    [ownerId, accountId, path],
+  );
+
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
   });
 
@@ -38,7 +72,7 @@ export default function FileUploader({
   return (
     <div {...getRootProps()} className="cursor-pointer">
       <input {...getInputProps()} />
-      <Button className={cn("uploader-button", className)}>
+      <Button className={cn("uploader-button w-full", className)}>
         <Image
           src="/assets/icons/upload.svg"
           alt="uploader"
@@ -86,11 +120,6 @@ export default function FileUploader({
             );
           })}
         </ul>
-      )}
-      {isDragActive ? (
-        <p>Drop the files here ...</p>
-      ) : (
-        <p>Drag&apos;n drop some files here, or click to select files</p>
       )}
     </div>
   );
