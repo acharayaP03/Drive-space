@@ -2,6 +2,15 @@
 
 Personal Storage is a web application built with Next.js and Appwrite, designed to provide users with a secure and efficient way to store, manage, and access their documents and files. This application leverages Appwrite's robust backend services for authentication, authorization, and file storage, ensuring that users' data is safe and easily accessible.
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next JS" />
+  <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS" />
+  <img src="https://img.shields.io/badge/shadcn-000000.svg?style=for-the-badge&logo=shadcn&logoColor=white" alt="Shadcn" />
+  <img src="https://img.shields.io/badge/appwrite-F02E65.svg?style=for-the-badge&logo=appwrite&logoColor=white" alt="Appwrite" />
+   <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="Typescript" />
+</p>
+
+
 ## Features
 
 - **User Authentication and Authorization**: Utilizes Appwrite's authentication services to securely log in and manage user sessions.
@@ -18,6 +27,7 @@ Personal Storage is a web application built with Next.js and Appwrite, designed 
 - **React**: A JavaScript library for building user interfaces.
 - **TypeScript**: A strongly typed programming language that builds on JavaScript, providing better tooling and error checking.
 - **Tailwind CSS**: A utility-first CSS framework for rapidly building custom user interfaces.
+- **shadcn**: A component based library
 
 ## Getting Started
 
