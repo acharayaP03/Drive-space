@@ -24,8 +24,9 @@ import Link from "next/link";
 import { constructDownloadUrl } from "@/lib/utils";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { renameFiles } from "@/lib/actions/file.actions";
+import { renameFiles, updateFileUsers } from "@/lib/actions/file.actions";
 import { usePathname } from "next/navigation";
+import { FileDetails, ShareInput } from "./ActionModelContents";
 
 export default function ActionMenu({ file }: { file: Models.Document }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,6 +34,7 @@ export default function ActionMenu({ file }: { file: Models.Document }) {
   const [action, setAction] = useState<ActionType | null>(null);
   const [name, setName] = useState(file.name);
   const [isLoading, setIsLoading] = useState(false);
+  const [emails, setEmails] = useState<string[]>([]);
 
   const pathname = usePathname();
 
@@ -57,7 +59,8 @@ export default function ActionMenu({ file }: { file: Models.Document }) {
           extension: file.extension,
           path: pathname,
         }),
-      share: () => {},
+      share: () =>
+        updateFileUsers({ fileId: file.$id, emails, path: pathname }),
       delete: () => {},
     };
 
@@ -66,6 +69,19 @@ export default function ActionMenu({ file }: { file: Models.Document }) {
 
     setIsLoading(false);
   }
+
+  const handleRemoveUser = async (email: string) => {
+    const updatedEmails = emails.filter((e) => e !== email);
+
+    const success = await updateFileUsers({
+      fileId: file.$id,
+      emails: updatedEmails,
+      path: pathname,
+    });
+
+    if (success) setEmails(updatedEmails);
+    closeAllModals();
+  };
 
   const renderDialogContent = () => {
     if (!action) return null;
@@ -87,6 +103,14 @@ export default function ActionMenu({ file }: { file: Models.Document }) {
             />
           )}
         </DialogHeader>
+        {value === "details" && <FileDetails file={file} />}
+        {value === "share" && (
+          <ShareInput
+            file={file}
+            onInputChange={setEmails}
+            onRemove={handleRemoveUser}
+          />
+        )}
         {["rename", "delete", "share"].includes(value) && (
           <DialogFooter className="flex flex-col gap-3 md:flex-row">
             <Button className="modal-cancel-button" onClick={closeAllModals}>
