@@ -24,13 +24,17 @@ import Link from "next/link";
 import { constructDownloadUrl } from "@/lib/utils";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { renameFiles } from "@/lib/actions/file.actions";
+import { usePathname } from "next/navigation";
 
 export default function ActionMenu({ file }: { file: Models.Document }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [action, setAction] = useState<ActionType | null>(null);
   const [name, setName] = useState(file.name);
-  const [isLoading, setIsloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const pathname = usePathname();
 
   function closeAllModals() {
     setIsModalOpen(false);
@@ -40,7 +44,28 @@ export default function ActionMenu({ file }: { file: Models.Document }) {
     // setEmail([])
   }
 
-  async function handleAction() {}
+  async function handleAction() {
+    if (!action) return;
+    setIsLoading(true);
+
+    let success = false;
+    const actions = {
+      rename: () =>
+        renameFiles({
+          fileId: file.$id,
+          name,
+          extension: file.extension,
+          path: pathname,
+        }),
+      share: () => {},
+      delete: () => {},
+    };
+
+    success = await actions[action.value as keyof typeof actions]();
+    if (success) closeAllModals();
+
+    setIsLoading(false);
+  }
 
   const renderDialogContent = () => {
     if (!action) return null;
@@ -130,7 +155,7 @@ export default function ActionMenu({ file }: { file: Models.Document }) {
                     src={actionItem.icon}
                     alt={actionItem.label}
                     width={30}
-                    height="30"
+                    height={30}
                   />
                   {actionItem.label}
                 </Link>
