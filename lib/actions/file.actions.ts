@@ -83,7 +83,7 @@ export async function getFiles() {
   const { databases } = await createAdminClient();
 
   try {
-    // get current loggedin user
+    // get current logged in user
     const currentUser = await getCurrentLoggedInUser();
 
     if (!currentUser) throw new Error("User not found");
@@ -96,8 +96,6 @@ export async function getFiles() {
       appwriteConfig.filesCollectionId,
       queries,
     );
-
-    console.log("files", files);
 
     return parseStringify(files);
   } catch (error) {
