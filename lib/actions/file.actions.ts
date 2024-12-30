@@ -9,8 +9,11 @@ import {
   handleError,
   parseStringify,
 } from "@/lib/utils";
+
 import { createAdminClient } from "@/lib/appwrite";
 import { appwriteConfig } from "@/lib/appwrite/config";
+import { getCurrentLoggedInUser } from "./user.actions";
+import { createQueries } from "../queries/api.queries";
 
 /**
  * @description
@@ -73,5 +76,32 @@ export async function uploadFile({
   } catch (error) {
     console.error(error);
     handleError(error, "Failed to upload file");
+  }
+}
+
+export async function getFiles() {
+  const { databases } = await createAdminClient();
+
+  try {
+    // get current loggedin user
+    const currentUser = await getCurrentLoggedInUser();
+
+    if (!currentUser) throw new Error("User not found");
+
+    // create a query to get all files
+    const queries = createQueries(currentUser);
+
+    const files = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.filesCollectionId,
+      queries,
+    );
+
+    console.log("files", files);
+
+    return parseStringify(files);
+  } catch (error) {
+    console.error(error);
+    handleError(error, "Failed to get files");
   }
 }

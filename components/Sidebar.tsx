@@ -4,12 +4,11 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-import { avatarPlaceholderUrl, navItems } from "@/constants";
+import { navItems } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import NavigationItems from "./NavigationItems";
 
-import type { ICurrentLoggedInUser } from "@/lib/typings";
 import UserInfo from "./UserInfo";
 
 export default function Sidebar({ fullName, email }: ICurrentLoggedInUser) {
