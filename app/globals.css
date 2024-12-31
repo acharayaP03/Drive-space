@@ -207,10 +207,11 @@
 
     /* Dashboard */
     .dashboard-container {
-        @apply mx-auto grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-2 xl:gap-10 !important;
+        @apply mx-auto grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-1 xl:gap-8 !important;
     }
     .dashboard-summary-list {
-        @apply mt-6 grid grid-cols-1 gap-4 xl:mt-10 xl:grid-cols-2 xl:gap-9 !important;
+        /* @apply mt-6 grid grid-cols-1 gap-4 xl:mt-10 xl:grid-cols-2 xl:gap-9 !important; */
+        @apply mt-6 flex w-full gap-4;
     }
     .dashboard-summary-card {
         @apply relative mt-6 rounded-[20px] bg-white p-5 transition-all hover:scale-105 !important;
@@ -225,7 +226,7 @@
         @apply h5 relative z-20 text-center !important;
     }
     .dashboard-recent-files {
-        @apply h-full rounded-[20px] bg-white p-5 xl:p-8 !important;
+        @apply rounded-[20px] bg-white p-5 xl:p-8 !important;
     }
     .recent-file-details {
         @apply flex w-full flex-col xl:flex-row xl:justify-between !important;
@@ -450,6 +451,33 @@
     .thumbnail-image {
         @apply size-full object-cover object-center !important;
     }
+
+    .scrollable-container {
+        @apply max-h-[500px] overflow-y-auto !important;
+    }
+
+    /* Custom scrollbar styles */
+    .scrollable-container::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .scrollable-container::-webkit-scrollbar-track {
+        @apply bg-white;
+    }
+
+    .scrollable-container::-webkit-scrollbar-thumb {
+        @apply border-r-4 bg-brand-100;
+    }
+
+    .scrollable-container::-webkit-scrollbar-thumb:hover {
+        @apply border-r-4 bg-brand-100;
+    }
+
+    /* For Firefox */
+    .scrollable-container {
+        scrollbar-width: thin;
+        scrollbar-color: #888 #f1f1f1;
+    }
 }
 
 @layer base {
@@ -457,6 +485,6 @@
         @apply border-border;
     }
     body {
-        @apply bg-background text-foreground;
+        @apply scroll-smooth bg-background text-foreground;
     }
 }
