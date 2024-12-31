@@ -18,7 +18,7 @@ export function createQueries(
         queries.push(Query.equal("type", types));
     }
     if (searchText) {
-        queries.push(Query.contains("name", [searchText]));
+        queries.push(Query.contains("name", searchText));
     }
 
     if (limit) {

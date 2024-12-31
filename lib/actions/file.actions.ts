@@ -87,7 +87,7 @@ export async function uploadFile({
 export async function getFiles({
     types = [],
     searchText = "",
-    sort = "$createAt-desc",
+    sort = "$createdAt-desc",
     limit,
 }: GetFilesProps) {
     const { databases } = await createAdminClient();
@@ -99,7 +99,13 @@ export async function getFiles({
         if (!currentUser) throw new Error("User not found");
 
         // create a query to get all files
-        const queries = createQueries(currentUser, types, searchText, sort, limit);
+        const queries = createQueries(
+            currentUser,
+            types,
+            searchText,
+            sort,
+            limit,
+        );
 
         const files = await databases.listDocuments(
             appwriteConfig.databaseId,
