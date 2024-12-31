@@ -3,12 +3,16 @@ import Sort from "@/components/Sort";
 import { getFiles } from "@/lib/actions/file.actions";
 import { Models } from "node-appwrite";
 import Card from "@/components/Card";
+import { getFileTypesParams } from "@/lib/utils";
 
-export default async function page({ params }: SearchParamProps) {
+export default async function page({ searchParams, params }: SearchParamProps) {
     const type = ((await params)?.type as string) || "";
+    const types = getFileTypesParams(type) as FileType[];
+
+    const searchText = ((await searchParams)?.query as string) || "";
+    const sort = ((await searchParams)?.sort as string) || "";
     // request files
-    const files = await getFiles();
-    console.log("files", files);
+    const files = await getFiles({ types, searchText, sort });
 
     return (
         <div className="page-container">

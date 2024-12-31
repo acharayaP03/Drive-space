@@ -76,26 +76,25 @@ export const getFileType = (fileName: string) => {
         "psd",
         "ai",
         "indd",
-        "xd",
-        "sketch",
-        "afdesign",
-        "afphoto",
-        "afphoto",
     ];
-    const imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "svg", "webp"];
-    const videoExtensions = ["mp4", "avi", "mov", "mkv", "webm"];
-    const audioExtensions = ["mp3", "wav", "ogg", "flac"];
 
-    if (documentExtensions.includes(extension))
-        return { type: "document", extension };
-    if (imageExtensions.includes(extension))
-        return { type: "image", extension };
-    if (videoExtensions.includes(extension))
-        return { type: "video", extension };
-    if (audioExtensions.includes(extension))
-        return { type: "audio", extension };
+    const imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "tiff", "svg"];
+    const videoExtensions = ["mp4", "mkv", "avi", "mov", "wmv", "flv"];
+    const audioExtensions = ["mp3", "wav", "aac", "flac", "ogg"];
 
-    return { type: "other", extension };
+    let type = "other";
+
+    if (documentExtensions.includes(extension)) {
+        type = "document";
+    } else if (imageExtensions.includes(extension)) {
+        type = "image";
+    } else if (videoExtensions.includes(extension)) {
+        type = "video";
+    } else if (audioExtensions.includes(extension)) {
+        type = "audio";
+    }
+
+    return { type, extension };
 };
 
 export const formatDateTime = (isoString: string | null | undefined) => {

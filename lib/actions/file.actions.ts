@@ -41,12 +41,14 @@ export async function uploadFile({
             inputFile,
         );
 
+        const { type, extension } = getFileType(file.name);
+
         // Create a file document with metadata
         const fileDocument = {
-            type: getFileType(file.type).type, // Get file type
+            type, // Get file type
             name: bucketFile.name,
             url: constructFileUrl(bucketFile.$id), // Get file URL
-            extension: getFileType(file.type).extension, // Get file extension
+            extension, // Get file extension
             size: bucketFile.sizeOriginal,
             owner: ownerId,
             accountId,
@@ -82,7 +84,12 @@ export async function uploadFile({
     }
 }
 
-export async function getFiles() {
+export async function getFiles({
+    types = [],
+    searchText = "",
+    sort = "$createAt-desc",
+    limit,
+}: GetFilesProps) {
     const { databases } = await createAdminClient();
 
     try {
@@ -92,7 +99,7 @@ export async function getFiles() {
         if (!currentUser) throw new Error("User not found");
 
         // create a query to get all files
-        const queries = createQueries(currentUser);
+        const queries = createQueries(currentUser, types, searchText, sort, limit);
 
         const files = await databases.listDocuments(
             appwriteConfig.databaseId,
