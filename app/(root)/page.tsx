@@ -1,14 +1,16 @@
-import ActionMenu from "@/components/ActionMenu";
-import FormattedDateTime from "@/components/FormattedDateTime";
-import Thumbnail from "@/components/Thumbnail";
+import { Models } from "node-appwrite";
 import { getFiles, getTotalSpaceUsedSummary } from "@/lib/actions/file.actions";
 import { convertFileSize, getUsageSummary } from "@/lib/utils";
+
 import { Separator } from "@radix-ui/react-separator";
 import Image from "next/image";
 import Link from "next/link";
-import { Models } from "node-appwrite";
+import ActionMenu from "@/components/ActionMenu";
+import FormattedDateTime from "@/components/FormattedDateTime";
+import Thumbnail from "@/components/Thumbnail";
+import Chart from "@/components/Chart";
 
-export default async function Home() {
+export default async function Dashboard() {
     const [files, totalSpace] = await Promise.all([
         getFiles({ types: [], limit: 10 }),
         getTotalSpaceUsedSummary(),
@@ -17,12 +19,13 @@ export default async function Home() {
     return (
         <div className="dashboard-container">
             <section>
+                <Chart used={totalSpace.used} />
                 <ul className="dashboard-summary-list">
                     {usageSummary.map((summary) => (
                         <Link
                             href={summary.url}
                             key={summary.title}
-                            className="dashboard-summary-card"
+                            className="dashboard-summary-card flex-1"
                         >
                             <div className="space-y-4">
                                 <div className="flex justify-between gap-3">
@@ -51,7 +54,7 @@ export default async function Home() {
                     ))}
                 </ul>
             </section>
-            <section className="dashboard-recent-files">
+            <section className="dashboard-recent-files scrollable-container">
                 <h2 className="h3 xl:h2 text-light-100">
                     Recent files uploaded
                 </h2>
