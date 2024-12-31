@@ -10,6 +10,8 @@ Personal Storage is a web application built with Next.js and Appwrite, designed 
    <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="Typescript" />
 </p>
 
+![image](https://github.com/user-attachments/assets/a7aa959b-48c9-4a5e-bad6-4bd73e209149)
+
 
 ## Features
 
@@ -29,14 +31,11 @@ Personal Storage is a web application built with Next.js and Appwrite, designed 
 - **Tailwind CSS**: A utility-first CSS framework for rapidly building custom user interfaces.
 - **shadcn**: A component based library
 
-## Getting Started
+## Things to do
 
-To get started with Personal Storage, follow these steps:
+- Crop image and save
+- share link and email
+- optimizzaion
+- Image generaion and save ( should be open ai or sonet)
+- mot to be added
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/your-username/personal-storage.git
-   cd personal-storage
-
-2. **Install dependencies**:
-   `npm install`
